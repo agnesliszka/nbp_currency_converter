@@ -1,8 +1,7 @@
 <template>
   <div class="currencyConverter">
-    <div>Currency converter</div>
-    <el-form label-position="left" label-width="130px">
-      <el-form-item label="`Currency converter">
+    <el-form label-position="top" label-width="130px">
+      <el-form-item label="Currency converter">
         <el-date-picker v-model="date" type="date" format="dd-MMM-yyyy">
         </el-date-picker>
       </el-form-item>
