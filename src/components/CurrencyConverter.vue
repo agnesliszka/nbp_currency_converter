@@ -6,6 +6,10 @@
         </el-date-picker>
       </el-form-item>
     </el-form>
+    <button>Get GBP currency rate</button>
+    <button>Get EUR currency rate</button>
+    <button>Get CHF currency rate</button>
+    <button>Get USD currency rate</button>
   </div>
 </template>
 <script lang="ts">
@@ -16,19 +20,25 @@ import axios from "axios";
 export default class HelloWorld extends Vue {
   date: string = "";
 
-  getUSDexchangeRate(): void {
-    axios.get(
-      `http://api.nbp.pl/api/exchangerates/rates/c/usd/${this.date}/?format=json`
+  getGBPexchangeRate(): void {
+    const gbpExchangeRates = axios.get(
+      `http://api.nbp.pl/api/exchangerates/rates/a/gbp/${this.date}/?format=json`
     );
+    console.log(gbpExchangeRates);
   }
   getEURexchangeRate(): void {
-    axios.get(
-      `http://api.nbp.pl/api/exchangerates/rates/c/eur/${this.date}/?format=json`
+    const eurExchangeRates = axios.get(
+      `http://api.nbp.pl/api/exchangerates/rates/a/eur/${this.date}/?format=json`
     );
   }
   getCHFexchangeRate(): void {
-    axios.get(
-      `http://api.nbp.pl/api/exchangerates/rates/c/chf/${this.date}/?format=json`
+    const chfExchangeRates = axios.get(
+      `http://api.nbp.pl/api/exchangerates/rates/a/chf/${this.date}/?format=json`
+    );
+  }
+  getUSDexchangeRate(): void {
+    const usdExchangeRates = axios.get(
+      `http://api.nbp.pl/api/exchangerates/rates/a/usd/${this.date}/?format=json`
     );
   }
 }
