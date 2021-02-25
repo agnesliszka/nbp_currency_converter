@@ -2,7 +2,7 @@
   <div class="currencyConverter">
     <el-form label-position="top" label-width="130px">
       <el-form-item label="Currency converter">
-        <el-date-picker v-model="date" type="date" format="dd-MMM-yyyy">
+        <el-date-picker v-model="date" type="date" format="YYYY-MM-DD">
         </el-date-picker>
       </el-form-item>
     </el-form>
