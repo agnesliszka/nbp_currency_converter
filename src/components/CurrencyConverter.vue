@@ -10,10 +10,27 @@
 </template>
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import axios from "axios";
 
 @Component
 export default class HelloWorld extends Vue {
   date: string = "";
+
+  getUSDexchangeRate(): void {
+    axios.get(
+      `http://api.nbp.pl/api/exchangerates/rates/c/usd/${this.date}/?format=json`
+    );
+  }
+  getEURexchangeRate(): void {
+    axios.get(
+      `http://api.nbp.pl/api/exchangerates/rates/c/eur/${this.date}/?format=json`
+    );
+  }
+  getCHFexchangeRate(): void {
+    axios.get(
+      `http://api.nbp.pl/api/exchangerates/rates/c/chf/${this.date}/?format=json`
+    );
+  }
 }
 </script>
 <style scoped></style>
