@@ -30,16 +30,19 @@ export default class HelloWorld extends Vue {
     const eurExchangeRates = axios.get(
       `http://api.nbp.pl/api/exchangerates/rates/a/eur/${this.date}/?format=json`
     );
+    console.log(eurExchangeRates);
   }
   getCHFexchangeRate(): void {
     const chfExchangeRates = axios.get(
       `http://api.nbp.pl/api/exchangerates/rates/a/chf/${this.date}/?format=json`
     );
+    console.log(chfExchangeRates);
   }
   getUSDexchangeRate(): void {
     const usdExchangeRates = axios.get(
       `http://api.nbp.pl/api/exchangerates/rates/a/usd/${this.date}/?format=json`
     );
+    console.log(usdExchangeRates);
   }
 }
 </script>
