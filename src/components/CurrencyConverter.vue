@@ -1,30 +1,32 @@
 <template>
   <div class="currencyConverter">
-    <span>Currency</span>
-    <el-select v-model="currency" placeholder="Select currency">
-      <el-option
-        v-for="currency in currencyList"
-        :key="currency"
-        :label="currency"
-        :value="currency"
-      >
-      </el-option>
-    </el-select>
-    <el-form label-position="top" label-width="130px">
-      <el-form-item label="Currency converter">
-        <el-date-picker
-          v-model="date"
-          type="date"
-          format="yyyy-MM-dd"
-          :placeholder="today()"
+    <div class="selectCurrencyAndDate">
+      <span>Currency</span>
+      <el-select v-model="currency" placeholder="Select currency">
+        <el-option
+          v-for="currency in currencyList"
+          :key="currency"
+          :label="currency"
+          :value="currency"
         >
-        </el-date-picker>
-      </el-form-item>
-    </el-form>
-    <div class="buttons">
+        </el-option>
+      </el-select>
+      <el-form label-position="top" label-width="130px">
+        <el-form-item label="Currency converter">
+          <el-date-picker
+            v-model="date"
+            type="date"
+            format="yyyy-MM-dd"
+            :placeholder="today()"
+          >
+          </el-date-picker>
+        </el-form-item>
+      </el-form>
       <el-button type="success" round @click="getCurrenciesList()"
         >getCurrenciesList</el-button
       >
+    </div>
+    <div class="buttons">
       <el-button type="primary" @click="getGBPexchangeRate()"
         >Get GBP currency rate</el-button
       >
@@ -149,9 +151,7 @@ export default class HelloWorld extends Vue {
 </script>
 <style scoped>
 .buttons {
-  width: 100%;
-  display: flex;
-  flex-grow: 1;
-  justify-items: space-between;
+  display: grid;
+  grid-template-columns: repeat(4, calc(25%));
 }
 </style>
