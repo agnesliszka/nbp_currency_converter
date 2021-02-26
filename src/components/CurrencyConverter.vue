@@ -49,6 +49,7 @@
         >{{ chosenCurrencyExchangeRateTitle }}
       </el-button>
     </div>
+    <div class="displayExchangeRate">{{ exchangeRate }}</div>
   </div>
 </template>
 <script lang="ts">
@@ -57,9 +58,11 @@ import axios from "axios";
 
 @Component
 export default class HelloWorld extends Vue {
-  date: string = "";
+  date: string = new Date().toISOString().split("T")[0];
   currencyList: Array<string> = [];
   currency: string = "";
+  responseDataList: Array<string> = [];
+  exchangeRate: string = "";
   loading: boolean = false;
 
   get chosenCurrencyExchangeRateTitle(): string {
@@ -109,25 +112,13 @@ export default class HelloWorld extends Vue {
 
   async getGBPexchangeRate(): Promise<void> {
     console.log(this.date);
+    // let exchangeRate: string = "";
     this.loading = true;
     await axios
       .get(
-        // `http://api.nbp.pl/api/exchangerates/rates/a/gbp/${this.date}/?format=json`
-        `http://api.nbp.pl/api/exchangerates/tables/a/2016-03-30/?format=json`
+        `http://api.nbp.pl/api/exchangerates/rates/a/gbp/${this.date}/?format=json`
       )
-      .then((response) => {
-        console.log("@response");
-        console.log(response);
-        // if (response.errorCode === 0) {
-        //   response.result.forEach((el) => this.itemTypes.push(el.value));
-        // } else {
-        //   const msg = `${response.errorCode}: ${response.errorMessage}`;
-        //   this.$notify.error({
-        //     title: "Error",
-        //     message: "This is an error message",
-        //   });
-        // }
-      })
+      .then((response: any) => (this.exchangeRate = response.data.rates[0].mid))
       .catch((exception) => {
         this.$notify.error({
           title: "Error",
@@ -137,43 +128,80 @@ export default class HelloWorld extends Vue {
       .finally(() => {
         this.loading = false;
       });
+  }
 
-    console.log(this.date);
-    const gbpExchangeRates = axios.get(
-      `http://api.nbp.pl/api/exchangerates/rates/a/gbp/${this.date}/?format=json`
-    );
-    console.log(gbpExchangeRates);
-  }
   getEURexchangeRate(): void {
-    const eurExchangeRates = axios.get(
-      `http://api.nbp.pl/api/exchangerates/rates/a/eur/${this.date}/?format=json`
-    );
-    console.log(eurExchangeRates);
+    axios
+      .get(
+        `http://api.nbp.pl/api/exchangerates/rates/a/eur/${this.date}/?format=json`
+      )
+      .then((response: any) => (this.exchangeRate = response.data.rates[0].mid))
+      .catch((exception) => {
+        this.$notify.error({
+          title: "Error",
+          message: exception,
+        });
+      })
+      .finally(() => {
+        this.loading = false;
+      });
   }
+
   getCHFexchangeRate(): void {
-    const chfExchangeRates = axios.get(
-      `http://api.nbp.pl/api/exchangerates/rates/a/chf/${this.date}/?format=json`
-    );
-    console.log(chfExchangeRates);
+    axios
+      .get(
+        `http://api.nbp.pl/api/exchangerates/rates/a/chf/${this.date}/?format=json`
+      )
+      .then((response: any) => (this.exchangeRate = response.data.rates[0].mid))
+      .catch((exception) => {
+        this.$notify.error({
+          title: "Error",
+          message: exception,
+        });
+      })
+      .finally(() => {
+        this.loading = false;
+      });
   }
+
   getUSDexchangeRate(): void {
-    const usdExchangeRates = axios.get(
-      `http://api.nbp.pl/api/exchangerates/rates/a/usd/${this.date}/?format=json`
-    );
-    console.log(usdExchangeRates);
+    axios
+      .get(
+        `http://api.nbp.pl/api/exchangerates/rates/a/usd/${this.date}/?format=json`
+      )
+      .then((response: any) => (this.exchangeRate = response.data.rates[0].mid))
+      .catch((exception) => {
+        this.$notify.error({
+          title: "Error",
+          message: exception,
+        });
+      })
+      .finally(() => {
+        this.loading = false;
+      });
   }
   getChosenCurrencyExchangeRate(): void {
-    const chosenCurrencyExchangeRate = axios.get(
-      `http://api.nbp.pl/api/exchangerates/rates/c/${this.currency}/${this.date}/?format=json`
-    );
-    console.log(chosenCurrencyExchangeRate);
+    axios
+      .get(
+        `http://api.nbp.pl/api/exchangerates/rates/c/${this.currency}/${this.date}/?format=json`
+      )
+      .then((response: any) => (this.exchangeRate = response.data.rates[0].mid))
+      .catch((exception) => {
+        this.$notify.error({
+          title: "Error",
+          message: exception,
+        });
+      })
+      .finally(() => {
+        this.loading = false;
+      });
   }
 }
 </script>
 <style scoped>
 .currencyConverter {
   display: grid;
-  grid-template-rows: 100px 30px;
+  grid-template-rows: 100px 40px 40px;
 }
 
 .selectCurrencyAndDate {
@@ -204,5 +232,9 @@ export default class HelloWorld extends Vue {
   display: grid;
   margin-right: 10px;
   grid-template-columns: repeat(5, calc(20%));
+}
+.displayExchangeRate {
+  margin-top: 50px;
+  text-align: center;
 }
 </style>
