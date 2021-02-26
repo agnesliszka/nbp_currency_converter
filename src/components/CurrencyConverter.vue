@@ -45,11 +45,14 @@
       <el-button type="primary" @click="getUSDexchangeRate()"
         >Get USD currency rate</el-button
       >
+      <el-button type="warning" @click="getChosenCurrencyExchangeRate()"
+        >{{ chosenCurrencyExchangeRateTitle }}
+      </el-button>
     </div>
   </div>
 </template>
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Watch } from "vue-property-decorator";
 import axios from "axios";
 
 @Component
@@ -59,9 +62,19 @@ export default class HelloWorld extends Vue {
   currency: string = "";
   loading: boolean = false;
 
+  get chosenCurrencyExchangeRateTitle(): string {
+    return `Get ${this.currency} currency rate`;
+  }
+
   async mounted() {
     this.today();
     await this.getCurrenciesList();
+  }
+
+  @Watch("date")
+  changeDateFormat(): void {
+    this.date = new Date(this.date).toISOString().split("T")[0];
+    console.log(this.date);
   }
 
   today() {
@@ -95,10 +108,12 @@ export default class HelloWorld extends Vue {
   }
 
   async getGBPexchangeRate(): Promise<void> {
+    console.log(this.date);
     this.loading = true;
     await axios
       .get(
-        `http://api.nbp.pl/api/exchangerates/rates/a/gbp/${this.date}/?format=json`
+        // `http://api.nbp.pl/api/exchangerates/rates/a/gbp/${this.date}/?format=json`
+        `http://api.nbp.pl/api/exchangerates/tables/a/2016-03-30/?format=json`
       )
       .then((response) => {
         console.log("@response");
@@ -187,6 +202,7 @@ export default class HelloWorld extends Vue {
 
 .buttons {
   display: grid;
-  grid-template-columns: repeat(4, calc(25%));
+  margin-right: 10px;
+  grid-template-columns: repeat(5, calc(20%));
 }
 </style>
