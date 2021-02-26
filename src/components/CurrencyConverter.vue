@@ -1,8 +1,11 @@
 <template>
   <div class="currencyConverter">
     <div class="selectCurrencyAndDate">
-      <span>Currency</span>
-      <el-select v-model="currency" placeholder="Select currency">
+      <el-select
+        class="currency"
+        v-model="currency"
+        placeholder="Select currency"
+      >
         <el-option
           v-for="currency in currencyList"
           :key="currency"
@@ -11,8 +14,8 @@
         >
         </el-option>
       </el-select>
-      <el-form label-position="top" label-width="130px">
-        <el-form-item label="Currency converter">
+      <el-form class="date" label-position="top" label-width="130px">
+        <el-form-item>
           <el-date-picker
             v-model="date"
             type="date"
@@ -22,7 +25,10 @@
           </el-date-picker>
         </el-form-item>
       </el-form>
-      <el-button type="success" round @click="getCurrenciesList()"
+      <el-button
+        class="acceptButton"
+        type="success"
+        @click="getCurrenciesList()"
         >getCurrenciesList</el-button
       >
     </div>
@@ -150,6 +156,34 @@ export default class HelloWorld extends Vue {
 }
 </script>
 <style scoped>
+.currencyConverter {
+  display: grid;
+  grid-template-rows: 100px 30px;
+}
+
+.selectCurrencyAndDate {
+  display: grid;
+  grid-template-columns: repeat(3, calc(33%));
+  grid-template-rows: 30px 30px;
+  column-gap: 10px;
+  row-gap: 10px;
+}
+
+.currency {
+  grid-row: 1 / span 1;
+  grid-column: 1 / span 1;
+}
+
+.date {
+  grid-row: 1 / span 1;
+  grid-column: 2 / span 1;
+}
+
+.acceptButton {
+  grid-row: 1 / span 2;
+  grid-column: 3 / span 1;
+}
+
 .buttons {
   display: grid;
   grid-template-columns: repeat(4, calc(25%));
