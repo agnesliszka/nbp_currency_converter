@@ -51,20 +51,17 @@ export default class HelloWorld extends Vue {
 
   async getCurrenciesList(): Promise<void> {
     this.loading = true;
+    const currencyList: Array<string> = [];
     const url = await fetch("https://api.nbp.pl/api/exchangerates/tables/a/");
     await url
       .json()
       .then((response) => {
-        const currencyList: Array<string> = [];
-        console.log(response[0].rates);
         response[0].rates.forEach(
           (el: { currency: string; code: string; mid: string }) => {
-            // console.log(el.code);
             currencyList.push(el.code);
           }
         );
         this.currencyList = [...currencyList];
-        console.log(currencyList);
       })
       .catch((exception: string) => {
         this.$notify.error({
@@ -73,8 +70,6 @@ export default class HelloWorld extends Vue {
         });
       })
       .finally(() => {
-        console.log("@this.currencyList");
-        console.log(this.currencyList);
         this.loading = false;
       });
   }
@@ -133,39 +128,11 @@ export default class HelloWorld extends Vue {
     console.log(usdExchangeRates);
   }
   getChosenCurrencyExchangeRate(): void {
-    const test = axios.get(
+    const chosenCurrencyExchangeRate = axios.get(
       `http://api.nbp.pl/api/exchangerates/rates/c/${this.currency}/${this.date}/?format=json`
     );
-    console.log(test);
+    console.log(chosenCurrencyExchangeRate);
   }
-
-  // // getCurrencyList = currencyList[0].rates;
-  // console.log("@currencies");
-  // console.log(getCurrencyList[0].rates);
-  // return {
-  //   currencyList,
-  // };
-
-  // populateCurrencies() {
-  //     api.getCurrenciesList().then(data => {
-  //        // console.log(data);
-  //        const currencies = data.currencies[0].rates;
-  //        // console.log(currencies);
-
-  //        const select = document.getElementById('currency');
-
-  //        currencies.forEach(currency => {
-  //           const option = document.createElement('option');
-  //           option.value = currency.code;
-  //           option.appendChild(document.createTextNode(currency.currency));
-  //           // option.style.textAlign = 'center';
-  //           select.appendChild(option);
-  //        });
-
-  //        //€ selected as default
-  //        document.querySelector("#currency option[value='EUR']").selected = true;
-  //     });
-  //  }
 }
 </script>
 <style scoped></style>
