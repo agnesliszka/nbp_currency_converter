@@ -182,6 +182,7 @@ export default class HelloWorld extends Vue {
 .acceptButton {
   grid-row: 1 / span 2;
   grid-column: 3 / span 1;
+  margin-right: 10px;
 }
 
 .buttons {
