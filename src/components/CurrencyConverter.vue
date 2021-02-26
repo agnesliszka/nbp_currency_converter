@@ -12,7 +12,12 @@
     </el-select>
     <el-form label-position="top" label-width="130px">
       <el-form-item label="Currency converter">
-        <el-date-picker v-model="date" type="date" format="yyyy-MM-dd">
+        <el-date-picker
+          v-model="date"
+          type="date"
+          format="yyyy-MM-dd"
+          :placeholder="today()"
+        >
         </el-date-picker>
       </el-form-item>
     </el-form>
@@ -35,7 +40,13 @@ export default class HelloWorld extends Vue {
   loading: boolean = false;
 
   async mounted() {
+    this.today();
     await this.getCurrenciesList();
+  }
+
+  today() {
+    const today = new Date().toISOString().split("T")[0];
+    return today;
   }
 
   async getCurrenciesList(): Promise<void> {
