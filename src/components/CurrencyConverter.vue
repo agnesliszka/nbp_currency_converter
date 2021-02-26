@@ -21,11 +21,23 @@
         </el-date-picker>
       </el-form-item>
     </el-form>
-    <button @click="getGBPexchangeRate()">Get GBP currency rate</button>
-    <button @click="getEURexchangeRate()">Get EUR currency rate</button>
-    <button @click="getCHFexchangeRate()">Get CHF currency rate</button>
-    <button @click="getUSDexchangeRate()">Get USD currency rate</button>
-    <button @click="getCurrenciesList()">getCurrenciesList</button>
+    <div class="buttons">
+      <el-button type="success" round @click="getCurrenciesList()"
+        >getCurrenciesList</el-button
+      >
+      <el-button type="primary" @click="getGBPexchangeRate()"
+        >Get GBP currency rate</el-button
+      >
+      <el-button type="primary" @click="getEURexchangeRate()"
+        >Get EUR currency rate</el-button
+      >
+      <el-button type="primary" @click="getCHFexchangeRate()"
+        >Get CHF currency rate</el-button
+      >
+      <el-button type="primary" @click="getUSDexchangeRate()"
+        >Get USD currency rate</el-button
+      >
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -135,4 +147,11 @@ export default class HelloWorld extends Vue {
   }
 }
 </script>
-<style scoped></style>
+<style scoped>
+.buttons {
+  width: 100%;
+  display: flex;
+  flex-grow: 1;
+  justify-items: space-between;
+}
+</style>
