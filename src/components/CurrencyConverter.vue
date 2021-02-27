@@ -224,9 +224,10 @@ export default class HelloWorld extends Vue {
 }
 
 .selectCurrencyAndDate {
-  margin: 60px;
+  margin-top: 60px;
+  margin-left: 150px;
   display: grid;
-  grid-template-columns: repeat(3, calc(33%));
+  grid-template-columns: repeat(3, calc(25%));
   grid-template-rows: 30px 30px;
   column-gap: 10px;
   row-gap: 10px;
