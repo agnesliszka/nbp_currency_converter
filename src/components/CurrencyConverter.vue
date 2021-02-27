@@ -68,6 +68,7 @@ export default class HelloWorld extends Vue {
   date: string = new Date().toISOString().split("T")[0];
   currencyList: Array<string> = [];
   currency: string = "";
+  currencyToLowerCase: string = "";
   responseDataList: Array<string> = [];
   exchangeRate: string = "";
   loading: boolean = false;
@@ -84,7 +85,11 @@ export default class HelloWorld extends Vue {
   @Watch("date")
   changeDateFormat(): void {
     this.date = new Date(this.date).toISOString().split("T")[0];
-    console.log(this.date);
+  }
+
+  @Watch("currency")
+  changeCurrencyToLowerCase(): void {
+    this.currencyToLowerCase = this.currency.toLowerCase();
   }
 
   today() {
@@ -191,7 +196,7 @@ export default class HelloWorld extends Vue {
   getChosenCurrencyExchangeRate(): void {
     axios
       .get(
-        `http://api.nbp.pl/api/exchangerates/rates/c/${this.currency}/${this.date}/?format=json`
+        `http://api.nbp.pl/api/exchangerates/rates/a/${this.currencyToLowerCase}/${this.date}/?format=json`
       )
       .then((response: any) => (this.exchangeRate = response.data.rates[0].mid))
       .catch((exception) => {
