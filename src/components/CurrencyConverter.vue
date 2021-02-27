@@ -26,12 +26,6 @@
             </el-date-picker>
           </el-form-item>
         </el-form>
-        <el-button
-          class="acceptButton"
-          type="success"
-          @click="getCurrenciesList()"
-          >getCurrenciesList</el-button
-        >
       </div>
       <div class="buttons">
         <el-button type="primary" @click="getGBPexchangeRate()"
@@ -85,6 +79,14 @@ export default class HelloWorld extends Vue {
   @Watch("date")
   changeDateFormat(): void {
     this.date = new Date(this.date).toISOString().split("T")[0];
+    const getDayOfTheWeek: number = new Date(this.date).getDay();
+    if (getDayOfTheWeek === 6 || getDayOfTheWeek === 0) {
+      this.$notify.error({
+        title: "Error",
+        message:
+          "Exchange rate cannot be taken for Saturday and Sunday. Please choose another day",
+      });
+    }
   }
 
   @Watch("currency")
@@ -230,9 +232,9 @@ export default class HelloWorld extends Vue {
 
 .selectCurrencyAndDate {
   margin-top: 60px;
-  margin-left: 150px;
+  margin-left: calc(50% - 200px);
   display: grid;
-  grid-template-columns: repeat(3, calc(25%));
+  grid-template-columns: repeat(2, calc(25%));
   grid-template-rows: 30px 30px;
   column-gap: 10px;
   row-gap: 10px;
