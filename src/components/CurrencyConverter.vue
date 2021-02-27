@@ -1,5 +1,6 @@
 <template>
   <div class="wrapper">
+    <div class="title">NBP currency rates converter</div>
     <div class="currencyConverter">
       <div class="selectCurrencyAndDate">
         <el-select
@@ -42,7 +43,7 @@
         >
       </div>
       <div class="chosenCurrencyRate">
-        <el-button type="warning" @click="getChosenCurrencyExchangeRate()"
+        <el-button type="success" @click="getChosenCurrencyExchangeRate()"
           >{{ chosenCurrencyExchangeRateTitle }}
         </el-button>
       </div>
@@ -73,18 +74,35 @@ export default class HelloWorld extends Vue {
 
   async mounted() {
     this.today();
+    if (
+      new Date(this.today()).getDay() === 5 ||
+      new Date(this.today()).getDay() === 6
+    ) {
+      console.log("@!!!!!!@");
+      this.$notify({
+        title: "Warning",
+        message:
+          "Exchange rate cannot be taken for Saturday and Sunday. Please choose another day.",
+        type: "warning",
+      });
+    }
     await this.getCurrenciesList();
   }
 
   @Watch("date")
   changeDateFormat(): void {
-    this.date = new Date(this.date).toISOString().split("T")[0];
+    const day = ("0" + new Date(this.date).getDate()).slice(-2);
+    const month = ("0" + (new Date(this.date).getMonth() + 1)).slice(-2);
+    this.date = new Date(this.date).getFullYear() + "-" + month + "-" + day;
+
     const getDayOfTheWeek: number = new Date(this.date).getDay();
+
     if (getDayOfTheWeek === 6 || getDayOfTheWeek === 0) {
-      this.$notify.error({
-        title: "Error",
+      this.$notify({
+        title: "Warning",
         message:
-          "Exchange rate cannot be taken for Saturday and Sunday. Please choose another day",
+          "Exchange rate cannot be taken for Saturday and Sunday. Please choose another day.",
+        type: "warning",
       });
     }
   }
@@ -130,8 +148,7 @@ export default class HelloWorld extends Vue {
     this.loading = true;
     await axios
       .get(
-        "http://api.nbp.pl/api/exchangerates/rates/a/gbp/2012-01-02/"
-        // `http://api.nbp.pl/api/exchangerates/rates/a/gbp/${this.date}/?format=json`
+        `http://api.nbp.pl/api/exchangerates/rates/a/gbp/${this.date}/?format=json`
       )
       .then((response: any) => (this.exchangeRate = response.data.rates[0].mid))
       .catch((exception) => {
@@ -222,7 +239,12 @@ export default class HelloWorld extends Vue {
   left: calc(50% - 35%);
   border-radius: 25px;
   border: 2px solid #73ad21;
-  background-color: white;
+  background-color: rgb(253, 253, 253);
+}
+
+.title {
+  margin-top: 20px;
+  font-size: 36px;
 }
 
 .currencyConverter {
@@ -231,7 +253,7 @@ export default class HelloWorld extends Vue {
 }
 
 .selectCurrencyAndDate {
-  margin-top: 60px;
+  margin-top: 40px;
   margin-left: calc(50% - 200px);
   display: grid;
   grid-template-columns: repeat(2, calc(25%));
@@ -257,7 +279,7 @@ export default class HelloWorld extends Vue {
 }
 
 .buttons {
-  margin: 60px;
+  margin: 30px;
   display: grid;
   margin-right: 50px;
   grid-template-columns: repeat(5, calc(25%));

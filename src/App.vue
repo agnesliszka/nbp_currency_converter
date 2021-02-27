@@ -27,6 +27,6 @@ export default class App extends Vue {}
   padding: 0px;
   min-width: 100vw;
   min-height: 100vh;
-  background-image: url("./assets/background.jpg");
+  background-image: url("./assets/background.png");
 }
 </style>
