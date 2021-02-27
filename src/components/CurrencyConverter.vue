@@ -1,55 +1,62 @@
 <template>
-  <div class="currencyConverter">
-    <div class="selectCurrencyAndDate">
-      <el-select
-        class="currency"
-        v-model="currency"
-        placeholder="Select currency"
-      >
-        <el-option
-          v-for="currency in currencyList"
-          :key="currency"
-          :label="currency"
-          :value="currency"
+  <div class="wrapper">
+    <div class="currencyConverter">
+      <div class="selectCurrencyAndDate">
+        <el-select
+          class="currency"
+          v-model="currency"
+          placeholder="Select currency"
         >
-        </el-option>
-      </el-select>
-      <el-form class="date" label-position="top" label-width="130px">
-        <el-form-item>
-          <el-date-picker
-            v-model="date"
-            type="date"
-            format="yyyy-MM-dd"
-            :placeholder="today()"
+          <el-option
+            v-for="currency in currencyList"
+            :key="currency"
+            :label="currency"
+            :value="currency"
           >
-          </el-date-picker>
-        </el-form-item>
-      </el-form>
-      <el-button
-        class="acceptButton"
-        type="success"
-        @click="getCurrenciesList()"
-        >getCurrenciesList</el-button
-      >
+          </el-option>
+        </el-select>
+        <el-form class="date">
+          <el-form-item>
+            <el-date-picker
+              v-model="date"
+              type="date"
+              format="yyyy-MM-dd"
+              :placeholder="today()"
+            >
+            </el-date-picker>
+          </el-form-item>
+        </el-form>
+        <el-button
+          class="acceptButton"
+          type="success"
+          @click="getCurrenciesList()"
+          >getCurrenciesList</el-button
+        >
+      </div>
+      <div class="buttons">
+        <el-button type="primary" @click="getGBPexchangeRate()"
+          >Get GBP currency rate</el-button
+        >
+        <el-button type="primary" @click="getEURexchangeRate()"
+          >Get EUR currency rate</el-button
+        >
+        <el-button type="primary" @click="getCHFexchangeRate()"
+          >Get CHF currency rate</el-button
+        >
+        <el-button type="primary" @click="getUSDexchangeRate()"
+          >Get USD currency rate</el-button
+        >
+      </div>
+      <div class="chosenCurrencyRate">
+        <el-button type="warning" @click="getChosenCurrencyExchangeRate()"
+          >{{ chosenCurrencyExchangeRateTitle }}
+        </el-button>
+      </div>
+      <div class="displayExchangeRate">
+        <div class="exchangeRateText">Exchane rate for {{ date }}</div>
+        <div class="exchangeRate">{{ exchangeRate }}</div>
+      </div>
     </div>
-    <div class="buttons">
-      <el-button type="primary" @click="getGBPexchangeRate()"
-        >Get GBP currency rate</el-button
-      >
-      <el-button type="primary" @click="getEURexchangeRate()"
-        >Get EUR currency rate</el-button
-      >
-      <el-button type="primary" @click="getCHFexchangeRate()"
-        >Get CHF currency rate</el-button
-      >
-      <el-button type="primary" @click="getUSDexchangeRate()"
-        >Get USD currency rate</el-button
-      >
-      <el-button type="warning" @click="getChosenCurrencyExchangeRate()"
-        >{{ chosenCurrencyExchangeRateTitle }}
-      </el-button>
-    </div>
-    <div class="displayExchangeRate">{{ exchangeRate }}</div>
   </div>
 </template>
 <script lang="ts">
@@ -116,7 +123,8 @@ export default class HelloWorld extends Vue {
     this.loading = true;
     await axios
       .get(
-        `http://api.nbp.pl/api/exchangerates/rates/a/gbp/${this.date}/?format=json`
+        "http://api.nbp.pl/api/exchangerates/rates/a/gbp/2012-01-02/"
+        // `http://api.nbp.pl/api/exchangerates/rates/a/gbp/${this.date}/?format=json`
       )
       .then((response: any) => (this.exchangeRate = response.data.rates[0].mid))
       .catch((exception) => {
@@ -199,12 +207,24 @@ export default class HelloWorld extends Vue {
 }
 </script>
 <style scoped>
+.wrapper {
+  width: 70%;
+  height: 70%;
+  position: absolute;
+  top: calc(50% - 35%);
+  left: calc(50% - 35%);
+  border-radius: 25px;
+  border: 2px solid #73ad21;
+  background-color: white;
+}
+
 .currencyConverter {
   display: grid;
-  grid-template-rows: 100px 40px 40px;
+  grid-template-rows: 100px 50px 50px 100px;
 }
 
 .selectCurrencyAndDate {
+  margin: 60px;
   display: grid;
   grid-template-columns: repeat(3, calc(33%));
   grid-template-rows: 30px 30px;
@@ -229,12 +249,29 @@ export default class HelloWorld extends Vue {
 }
 
 .buttons {
+  margin: 60px;
   display: grid;
-  margin-right: 10px;
-  grid-template-columns: repeat(5, calc(20%));
+  margin-right: 50px;
+  grid-template-columns: repeat(5, calc(25%));
 }
+
+.chosenCurrencyRate {
+  margin-top: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .displayExchangeRate {
-  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 170px;
+}
+
+.exchangeRate {
+  font-size: 36px;
   text-align: center;
 }
 </style>
