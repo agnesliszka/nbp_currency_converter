@@ -61,6 +61,7 @@ import axios from "axios";
 @Component
 export default class HelloWorld extends Vue {
   date: string = new Date().toISOString().split("T")[0];
+  dayOfTheWeek: number | undefined;
   currencyList: Array<string> = [];
   currency: string = "";
   currencyToLowerCase: string = "";
@@ -74,11 +75,8 @@ export default class HelloWorld extends Vue {
 
   async mounted() {
     this.today();
-    if (
-      new Date(this.today()).getDay() === 5 ||
-      new Date(this.today()).getDay() === 6
-    ) {
-      console.log("@!!!!!!@");
+    this.dayOfTheWeek = new Date(this.date).getDay();
+    if (this.dayOfTheWeek === 5 || this.dayOfTheWeek === 6) {
       this.$notify({
         title: "Warning",
         message:
@@ -95,9 +93,9 @@ export default class HelloWorld extends Vue {
     const month = ("0" + (new Date(this.date).getMonth() + 1)).slice(-2);
     this.date = new Date(this.date).getFullYear() + "-" + month + "-" + day;
 
-    const getDayOfTheWeek: number = new Date(this.date).getDay();
+    this.dayOfTheWeek = new Date(this.date).getDay();
 
-    if (getDayOfTheWeek === 6 || getDayOfTheWeek === 0) {
+    if (this.dayOfTheWeek === 6 || this.dayOfTheWeek === 0) {
       this.$notify({
         title: "Warning",
         message:
@@ -143,8 +141,6 @@ export default class HelloWorld extends Vue {
   }
 
   async getGBPexchangeRate(): Promise<void> {
-    console.log(this.date);
-    // let exchangeRate: string = "";
     this.loading = true;
     await axios
       .get(
@@ -213,20 +209,34 @@ export default class HelloWorld extends Vue {
       });
   }
   getChosenCurrencyExchangeRate(): void {
-    axios
-      .get(
-        `http://api.nbp.pl/api/exchangerates/rates/a/${this.currencyToLowerCase}/${this.date}/?format=json`
-      )
-      .then((response: any) => (this.exchangeRate = response.data.rates[0].mid))
-      .catch((exception) => {
-        this.$notify.error({
-          title: "Error",
-          message: exception,
-        });
-      })
-      .finally(() => {
-        this.loading = false;
+    if (this.currency === "") {
+      this.$notify.error({
+        title: "Error",
+        message: "Please select currency",
       });
+    } else if (this.dayOfTheWeek === 6 || this.dayOfTheWeek === 6) {
+      this.$notify.error({
+        title: "Error",
+        message: "Please input day different than Saturday or Sunday",
+      });
+    } else {
+      axios
+        .get(
+          `http://api.nbp.pl/api/exchangerates/rates/a/${this.currencyToLowerCase}/${this.date}/?format=json`
+        )
+        .then(
+          (response: any) => (this.exchangeRate = response.data.rates[0].mid)
+        )
+        .catch((exception) => {
+          this.$notify.error({
+            title: "Error",
+            message: exception,
+          });
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    }
   }
 }
 </script>
