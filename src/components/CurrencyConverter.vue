@@ -231,69 +231,6 @@ export default class HelloWorld extends Vue {
 }
 </script>
 <style scoped>
-.wrapper {
-  width: 70%;
-  height: 70%;
-  position: absolute;
-  top: calc(50% - 35%);
-  left: calc(50% - 35%);
-  border-radius: 25px;
-  border: 2px solid #73ad21;
-  background-color: rgb(253, 253, 253);
-}
-
-.title {
-  margin-top: 20px;
-  font-size: 36px;
-}
-
-.currencyConverter {
-  display: grid;
-  grid-template-rows: 100px 50px 50px 100px;
-}
-
-.selectCurrencyAndDate {
-  margin-top: 40px;
-  margin-left: calc(50% - 200px);
-  display: grid;
-  grid-template-columns: repeat(2, calc(25%));
-  grid-template-rows: 30px 30px;
-  column-gap: 10px;
-  row-gap: 10px;
-}
-
-.currency {
-  grid-row: 1 / span 1;
-  grid-column: 1 / span 1;
-}
-
-.date {
-  grid-row: 1 / span 1;
-  grid-column: 2 / span 1;
-}
-
-.buttons {
-  margin-left: 50px;
-  display: grid;
-  margin-right: 50px;
-  grid-template-columns: repeat(4, 25%);
-}
-
-.chosenCurrencyRate {
-  margin-top: 120px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.displayExchangeRate {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 170px;
-}
-
 .exchangeRate {
   font-size: 36px;
   text-align: center;
@@ -318,7 +255,7 @@ export default class HelloWorld extends Vue {
 
   .currencyConverter {
     margin-top: 0px;
-    margin-left: 20px;
+    margin-left: 35px;
     display: grid;
     grid-template-rows: 100px 220px 40px 40px;
   }
@@ -372,6 +309,73 @@ export default class HelloWorld extends Vue {
     align-items: center;
     margin-top: 50px;
     margin-right: 50px;
+  }
+}
+
+/* Desktop Styles */
+@media (min-width: 961px) {
+  .wrapper {
+    margin: 0 auto;
+    width: 70%;
+    height: 70%;
+    position: absolute;
+    top: calc(50% - 35%);
+    left: calc(50% - 35%);
+    border-radius: 25px;
+    border: 2px solid #73ad21;
+    background-color: rgb(253, 253, 253);
+  }
+
+  .title {
+    margin-top: 20px;
+    font-size: 36px;
+  }
+
+  .currencyConverter {
+    display: grid;
+    grid-template-rows: 100px 50px 50px 100px;
+  }
+
+  .selectCurrencyAndDate {
+    margin-top: 40px;
+    margin-left: calc(50% - 200px);
+    display: grid;
+    grid-template-columns: repeat(2, calc(25%));
+    grid-template-rows: 30px 30px;
+    column-gap: 10px;
+    row-gap: 10px;
+  }
+
+  .currency {
+    grid-row: 1 / span 1;
+    grid-column: 1 / span 1;
+  }
+
+  .date {
+    grid-row: 1 / span 1;
+    grid-column: 2 / span 1;
+  }
+
+  .buttons {
+    margin-left: 50px;
+    display: grid;
+    margin-right: 50px;
+    grid-template-columns: repeat(4, 25%);
+  }
+
+  .chosenCurrencyRate {
+    margin-top: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .displayExchangeRate {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 170px;
   }
 }
 </style>
