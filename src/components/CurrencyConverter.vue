@@ -83,8 +83,6 @@ export default class HelloWorld extends Vue {
   async mounted() {
     this.today();
     this.dayOfTheWeek = new Date(this.date).getDay();
-    console.log("@this.dayOfTheWeek mounted");
-    console.log(this.dayOfTheWeek);
     if (this.dayOfTheWeek === 6 || this.dayOfTheWeek === 0) {
       this.$notify({
         title: "Warning",
@@ -225,19 +223,9 @@ export default class HelloWorld extends Vue {
   getChosenCurrencyExchangeRate(): void {
     if (this.currency === "") {
       this.currencyValidationFailed = true;
-      // this.$notify.error({
-      //   title: "Error",
-      //   message: "Please select currency",
-      // });
-      console.log("@this.dayOfTheWeek");
-      console.log(this.dayOfTheWeek);
     }
     if (this.dayOfTheWeek === 6 || this.dayOfTheWeek === 0) {
       this.dateValidationFailed = true;
-      // this.$notify.error({
-      //   title: "Error",
-      //   message: "Please input day different than Saturday or Sunday",
-      // });
     } else {
       axios
         .get(
