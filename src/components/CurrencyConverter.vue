@@ -272,17 +272,11 @@ export default class HelloWorld extends Vue {
   grid-column: 2 / span 1;
 }
 
-.acceptButton {
-  grid-row: 1 / span 2;
-  grid-column: 3 / span 1;
-  margin-right: 10px;
-}
-
 .buttons {
-  margin: 30px;
+  margin-left: 50px;
   display: grid;
   margin-right: 50px;
-  grid-template-columns: repeat(5, calc(25%));
+  grid-template-columns: repeat(4, 25%);
 }
 
 .chosenCurrencyRate {
@@ -303,5 +297,77 @@ export default class HelloWorld extends Vue {
 .exchangeRate {
   font-size: 36px;
   text-align: center;
+}
+
+/* Mobile Styles */
+@media (max-width: 400px) {
+  .wrapper {
+    width: 80%;
+    height: 90%;
+    position: absolute;
+    top: calc(50% - 45%);
+    left: calc(50% - 40%);
+    border-radius: 25px;
+    border: 2px solid #73ad21;
+    background-color: rgb(253, 253, 253);
+  }
+  .title {
+    height: 16px;
+    font-size: 16px;
+  }
+
+  .currencyConverter {
+    margin-top: 0px;
+    margin-left: 20px;
+    display: grid;
+    grid-template-rows: 100px 220px 40px 40px;
+  }
+
+  .selectCurrencyAndDate {
+    margin-top: 10px;
+    display: grid;
+    margin-left: 1px;
+    grid-template-columns: 220px;
+    grid-template-rows: 40px 40px;
+    row-gap: 15px;
+  }
+
+  .currency {
+    grid-row: 1 / span 1;
+    grid-column: 1 / span 1;
+  }
+
+  .date {
+    grid-row: 2 / span 1;
+    grid-column: 1 / span 1;
+  }
+
+  .buttons {
+    margin-left: 0px;
+    margin-top: 20px;
+    margin-right: 30px;
+    display: grid;
+    grid-template-rows: 40px;
+    grid-template-columns: 220px;
+    row-gap: 10px;
+  }
+
+  .chosenCurrencyRate {
+    margin-right: 30px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .displayExchangeRate {
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    margin-right: 50px;
+  }
 }
 </style>
