@@ -455,7 +455,7 @@ export default class HelloWorld extends Vue {
   }
 
   .chosenCurrencyRate {
-    margin-top: 120px;
+    margin-top: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -466,7 +466,7 @@ export default class HelloWorld extends Vue {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 170px;
+    margin-top: 100px;
   }
 }
 </style>
