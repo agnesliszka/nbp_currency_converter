@@ -249,6 +249,8 @@ export default class HelloWorld extends Vue {
     background-color: rgb(253, 253, 253);
   }
   .title {
+    margin-top: 10px;
+    margin-bottom: 10px;
     height: 16px;
     font-size: 16px;
   }
@@ -312,6 +314,85 @@ export default class HelloWorld extends Vue {
   }
 }
 
+/* Tablet Styles */
+@media (min-width: 401px) and (max-width: 960px) {
+  .wrapper {
+    width: 60%;
+    height: 60%;
+    position: absolute;
+    top: calc(50% - 30%);
+    left: calc(50% - 30%);
+    border-radius: 25px;
+    border: 2px solid #73ad21;
+    background-color: rgb(253, 253, 253);
+  }
+  .title {
+    height: 36px;
+    font-size: 36px;
+    margin-top: 20px;
+    margin-bottom: 40px;
+  }
+
+  .currencyConverter {
+    margin-top: 0px;
+    margin-left: 35px;
+    display: grid;
+    grid-template-rows: 100px 120px 80px 40px;
+  }
+
+  .selectCurrencyAndDate {
+    margin-top: 40px;
+    margin-left: calc(50% - 200px);
+    display: grid;
+    grid-template-columns: repeat(2, calc(25%));
+    grid-template-rows: 30px 30px;
+    column-gap: 10px;
+    row-gap: 10px;
+  }
+
+  .currency {
+    grid-row: 1 / span 1;
+    grid-column: 1 / span 1;
+  }
+
+  .date {
+    grid-row: 1 / span 1;
+    grid-column: 2 / span 1;
+  }
+
+  .buttons {
+    margin-left: 0px;
+    margin-top: 20px;
+    margin-right: 30px;
+    display: grid;
+    grid-template-rows: 40px;
+    grid-template-columns: repeat(2, 50%);
+    column-gap: 10px;
+    row-gap: 20px;
+  }
+
+  .el-button + .el-button {
+    margin-left: 0px;
+  }
+
+  .chosenCurrencyRate {
+    margin-right: 30px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .displayExchangeRate {
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    margin-right: 50px;
+  }
+}
 /* Desktop Styles */
 @media (min-width: 961px) {
   .wrapper {
