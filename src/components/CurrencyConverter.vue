@@ -16,6 +16,10 @@
           >
           </el-option>
         </el-select>
+        <div class="validationFailed" v-show="currencyValidationFailed">
+          Please input currency
+        </div>
+        <div v-show="!currencyValidationFailed"></div>
         <el-form-item class="date">
           <el-date-picker
             v-model="date"
@@ -25,6 +29,9 @@
           >
           </el-date-picker>
         </el-form-item>
+        <div class="validationFailed" v-show="dateValidationFailed">
+          Please input date other than Saturday and Sunday.
+        </div>
       </el-form>
       <div class="buttons">
         <el-button type="primary" @click="getGBPexchangeRate()"
@@ -66,7 +73,8 @@ export default class HelloWorld extends Vue {
   responseDataList: Array<string> = [];
   exchangeRate: string = "";
   loading: boolean = false;
-  validationFailed: boolean = false;
+  currencyValidationFailed: boolean = false;
+  dateValidationFailed: boolean = false;
 
   get chosenCurrencyExchangeRateTitle(): string {
     return `Get ${this.currency} currency rate`;
@@ -75,11 +83,13 @@ export default class HelloWorld extends Vue {
   async mounted() {
     this.today();
     this.dayOfTheWeek = new Date(this.date).getDay();
-    if (this.dayOfTheWeek === 5 || this.dayOfTheWeek === 6) {
+    console.log("@this.dayOfTheWeek mounted");
+    console.log(this.dayOfTheWeek);
+    if (this.dayOfTheWeek === 6 || this.dayOfTheWeek === 0) {
       this.$notify({
         title: "Warning",
         message:
-          "Exchange rate cannot be taken for Saturday and Sunday. Please choose another day.",
+          "No exchange rate for Saturday and Sunday. Please choose another day.",
         type: "warning",
       });
     }
@@ -87,26 +97,31 @@ export default class HelloWorld extends Vue {
   }
 
   @Watch("date")
-  changeDateFormat(): void {
+  changeDateFormatAndDisableWarningIfRequired(): void {
     const day = ("0" + new Date(this.date).getDate()).slice(-2);
     const month = ("0" + (new Date(this.date).getMonth() + 1)).slice(-2);
     this.date = new Date(this.date).getFullYear() + "-" + month + "-" + day;
 
     this.dayOfTheWeek = new Date(this.date).getDay();
-
     if (this.dayOfTheWeek === 6 || this.dayOfTheWeek === 0) {
       this.$notify({
         title: "Warning",
         message:
-          "Exchange rate cannot be taken for Saturday and Sunday. Please choose another day.",
+          "No exchange rate for Saturday and Sunday. Please choose another day.",
         type: "warning",
       });
+    } else {
+      this.dateValidationFailed = false;
     }
   }
 
   @Watch("currency")
-  changeCurrencyToLowerCase(): void {
+  changeCurrencyToLowerCaseAndDisableWarningIfRequired(): void {
     this.currencyToLowerCase = this.currency.toLowerCase();
+
+    if (this.currency !== "") {
+      this.currencyValidationFailed = false;
+    }
   }
 
   today() {
@@ -209,15 +224,20 @@ export default class HelloWorld extends Vue {
   }
   getChosenCurrencyExchangeRate(): void {
     if (this.currency === "") {
-      this.$notify.error({
-        title: "Error",
-        message: "Please select currency",
-      });
-    } else if (this.dayOfTheWeek === 6 || this.dayOfTheWeek === 6) {
-      this.$notify.error({
-        title: "Error",
-        message: "Please input day different than Saturday or Sunday",
-      });
+      this.currencyValidationFailed = true;
+      // this.$notify.error({
+      //   title: "Error",
+      //   message: "Please select currency",
+      // });
+      console.log("@this.dayOfTheWeek");
+      console.log(this.dayOfTheWeek);
+    }
+    if (this.dayOfTheWeek === 6 || this.dayOfTheWeek === 0) {
+      this.dateValidationFailed = true;
+      // this.$notify.error({
+      //   title: "Error",
+      //   message: "Please input day different than Saturday or Sunday",
+      // });
     } else {
       axios
         .get(
@@ -243,6 +263,12 @@ export default class HelloWorld extends Vue {
 .exchangeRate {
   font-size: 36px;
   text-align: center;
+}
+
+.validationFailed {
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
 }
 
 /* Mobile Styles */
@@ -447,6 +473,7 @@ export default class HelloWorld extends Vue {
   }
 
   .buttons {
+    margin-top: 20px;
     margin-left: 50px;
     display: grid;
     margin-right: 50px;
@@ -454,7 +481,7 @@ export default class HelloWorld extends Vue {
   }
 
   .chosenCurrencyRate {
-    margin-top: 20px;
+    margin-top: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -465,7 +492,7 @@ export default class HelloWorld extends Vue {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 100px;
+    margin-top: 40px;
   }
 }
 </style>
