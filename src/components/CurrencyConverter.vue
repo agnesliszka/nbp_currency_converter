@@ -352,6 +352,10 @@ export default class HelloWorld extends Vue {
     row-gap: 10px;
   }
 
+  .el-button + .el-button {
+    margin-left: 0px;
+  }
+
   .chosenCurrencyRate {
     margin-right: 30px;
     margin-top: 20px;
