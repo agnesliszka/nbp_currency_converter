@@ -2,7 +2,7 @@
   <div class="wrapper">
     <div class="title">NBP currency rates converter</div>
     <div class="currencyConverter">
-      <div class="selectCurrencyAndDate">
+      <el-form class="selectCurrencyAndDate">
         <el-select
           class="currency"
           v-model="currency"
@@ -16,18 +16,16 @@
           >
           </el-option>
         </el-select>
-        <el-form class="date">
-          <el-form-item>
-            <el-date-picker
-              v-model="date"
-              type="date"
-              format="yyyy-MM-dd"
-              :placeholder="today()"
-            >
-            </el-date-picker>
-          </el-form-item>
-        </el-form>
-      </div>
+        <el-form-item class="date">
+          <el-date-picker
+            v-model="date"
+            type="date"
+            format="yyyy-MM-dd"
+            :placeholder="today()"
+          >
+          </el-date-picker>
+        </el-form-item>
+      </el-form>
       <div class="buttons">
         <el-button type="primary" @click="getGBPexchangeRate()"
           >Get GBP currency rate</el-button
@@ -68,6 +66,7 @@ export default class HelloWorld extends Vue {
   responseDataList: Array<string> = [];
   exchangeRate: string = "";
   loading: boolean = false;
+  validationFailed: boolean = false;
 
   get chosenCurrencyExchangeRateTitle(): string {
     return `Get ${this.currency} currency rate`;
