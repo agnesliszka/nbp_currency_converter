@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <div class="title">NBP currency rates converter</div>
+    <div class="title">{{ title }}</div>
     <div class="currencyConverter">
       <el-form class="selectCurrencyAndDate">
         <el-select
@@ -60,11 +60,13 @@
   </div>
 </template>
 <script lang="ts">
-import { Component, Vue, Watch } from "vue-property-decorator";
+import { Component, Vue, Watch, Prop } from "vue-property-decorator";
 import axios from "axios";
 
 @Component
 export default class HelloWorld extends Vue {
+  @Prop() private title!: string;
+
   date: string = new Date().toISOString().split("T")[0];
   dayOfTheWeek: number | undefined;
   currencyList: Array<string> = [];

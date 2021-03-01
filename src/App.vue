@@ -1,7 +1,5 @@
 <template>
-  <div id="app">
-    <CurrencyConverter />
-  </div>
+  <div id="app"><CurrencyConverter :title="title" /></div>
 </template>
 
 <script lang="ts">
@@ -13,7 +11,9 @@ import CurrencyConverter from "./components/CurrencyConverter.vue";
     CurrencyConverter,
   },
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+  title: string = "NBP currency rates converter";
+}
 </script>
 
 <style>
